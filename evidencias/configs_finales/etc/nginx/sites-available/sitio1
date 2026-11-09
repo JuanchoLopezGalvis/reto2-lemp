@@ -1,0 +1,35 @@
+# /etc/nginx/sites-available/sitio1
+server {
+    listen 80;
+    server_name sitio1.local;
+    access_log /var/log/nginx/sitio1.access.log lemp;
+    # Forzar HTTPS
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl;
+    http2 on;
+    server_name sitio1.local;
+
+    root /var/www/sitio1;
+    index index.php index.html;
+
+    ssl_certificate     /etc/nginx/ssl/sitios.crt;
+    ssl_certificate_key /etc/nginx/ssl/sitios.key;
+
+    access_log /var/log/nginx/sitio1.access.log lemp;
+    error_log  /var/log/nginx/sitio1.error.log warn;
+
+    include snippets/seguridad-sitio.conf;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        # Pool PHP-FPM exclusivo de este sitio (usuario de sistema www-sitio1)
+        fastcgi_pass unix:/run/php/php8.5-fpm-sitio1.sock;
+    }
+}

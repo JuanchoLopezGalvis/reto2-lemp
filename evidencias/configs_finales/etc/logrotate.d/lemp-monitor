@@ -1,0 +1,8 @@
+/var/log/lemp-monitor.log {
+    su root syslog
+    weekly
+    rotate 4
+    compress
+    missingok
+    notifempty
+}

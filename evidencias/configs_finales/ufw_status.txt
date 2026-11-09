@@ -1,0 +1,16 @@
+Status: active
+Logging: on (low)
+Default: deny (incoming), allow (outgoing), disabled (routed)
+New profiles: skip
+
+To                         Action      From
+--                         ------      ----
+22/tcp on tailscale0       ALLOW IN    Anywhere                   # SSH solo por Tailscale
+80/tcp on tailscale0       ALLOW IN    Anywhere                   # HTTP (301 a HTTPS) solo por Tailscale
+443/tcp on tailscale0      ALLOW IN    Anywhere                   # HTTPS solo por Tailscale
+41641/udp                  ALLOW IN    Anywhere                   # Tailscale WireGuard directo (peer-to-peer)
+22/tcp (v6) on tailscale0  ALLOW IN    Anywhere (v6)              # SSH solo por Tailscale
+80/tcp (v6) on tailscale0  ALLOW IN    Anywhere (v6)              # HTTP (301 a HTTPS) solo por Tailscale
+443/tcp (v6) on tailscale0 ALLOW IN    Anywhere (v6)              # HTTPS solo por Tailscale
+41641/udp (v6)             ALLOW IN    Anywhere (v6)              # Tailscale WireGuard directo (peer-to-peer)
+

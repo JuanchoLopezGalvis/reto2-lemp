@@ -1,0 +1,11 @@
+# /etc/nginx/sites-available/00-rechazo  — servidor por defecto
+# Cualquier petición que no sea para sitio1.local / sitio2.local (p. ej. por IP directa o un
+# nombre inventado) no recibe respuesta: no se revela qué sitios existen.
+server {
+    listen 80 default_server;
+    listen 443 ssl default_server;
+    server_name _;
+    ssl_reject_handshake on;   # en 443 ni siquiera se completa TLS (no se muestra el certificado)
+    access_log /var/log/nginx/rechazo.access.log lemp;
+    return 444;                # 444 = cerrar la conexión sin respuesta
+}
